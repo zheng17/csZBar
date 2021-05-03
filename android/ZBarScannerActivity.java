@@ -56,6 +56,7 @@ implements SurfaceHolder.Callback {
     // Public Constants ------------------------------------------------
 
     public static final String EXTRA_QRVALUE = "qrValue";
+     public static final String EXTRA_TYPE = "codeType";
     public static final String EXTRA_PARAMS = "params";
     public static final int RESULT_ERROR = RESULT_FIRST_USER + 1;
     private static final int CAMERA_PERMISSION_REQUEST = 1;
@@ -404,14 +405,16 @@ implements SurfaceHolder.Callback {
 
             if (scanner.scanImage(barcode) != 0) {
                 String qrValue = "";
-
+                int type=Symbol.QRCODE;
                 SymbolSet syms = scanner.getResults();
                 for (Symbol sym : syms) {
                     qrValue = sym.getData();
+                    type=sym.getType();
 
                     // Return 1st found QR code value to the calling Activity.
                     Intent result = new Intent ();
                     result.putExtra(EXTRA_QRVALUE, qrValue);
+                     result.putExtra(EXTRA_TYPE, type+"");
                     setResult(Activity.RESULT_OK, result);
                     finish();
                 }

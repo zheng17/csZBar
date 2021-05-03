@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
-
+import android.util.Log;
 import org.cloudsky.cordovaPlugins.ZBarScannerActivity;
 
 public class ZBar extends CordovaPlugin {
@@ -23,7 +23,7 @@ public class ZBar extends CordovaPlugin {
 
     private boolean isInProgress = false;
     private CallbackContext scanCallbackContext;
-
+    private static final String LOG_TAG = "BarcodeScanner";
 
     // Plugin API ------------------------------------------------------
 
@@ -60,7 +60,17 @@ public class ZBar extends CordovaPlugin {
             switch(resultCode) {
                 case Activity.RESULT_OK:
                     String barcodeValue = result.getStringExtra(ZBarScannerActivity.EXTRA_QRVALUE);
-                    scanCallbackContext.success(barcodeValue);
+                     String typeStr=result.getStringExtra(ZBarScannerActivity.EXTRA_TYPE);
+                     int type =Integer.parseInt(typeStr);
+                    String format=ZBarcodeFormat.getFormatById(type).getName();
+                    JSONObject obj = new JSONObject();
+                 try {
+                    obj.put("text", barcodeValue);
+                     obj.put("format", format);
+                      } catch (JSONException e) {
+                                         Log.d(LOG_TAG, "This should never happen");
+                                     }
+                    scanCallbackContext.success(obj);
                     break;
                 case Activity.RESULT_CANCELED:
                     scanCallbackContext.error("cancelled");
