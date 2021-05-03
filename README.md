@@ -10,7 +10,7 @@ In this fork a button has been added to turn off and on device flash. In additio
 
 ## Installation
 
-    cordova plugin add cordova-plugin-cszbar
+    cordova plugin add https://github.com/zheng17/csZBar.git
 
 ## API
 
