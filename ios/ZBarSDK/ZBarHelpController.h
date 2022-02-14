@@ -21,7 +21,9 @@
 //  http://sourceforge.net/projects/zbar
 //------------------------------------------------------------------------
 
-#import <UIKit/UIKit.h>
+//#import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
+//#import "CDVWKWebViewUIDelegate.h"
 
 @class ZBarHelpController;
 
@@ -36,12 +38,12 @@
 // failure dialog w/a few useful tips
 
 @interface ZBarHelpController : UIViewController
-                              < UIWebViewDelegate,
+                              < WKNavigationDelegate,
                                 UIAlertViewDelegate >
 {
     NSString *reason;
     id delegate;
-    UIWebView *webView;
+    WKWebView *webView;
     UIToolbar *toolbar;
     UIBarButtonItem *doneBtn, *backBtn, *space;
     NSURL *linkURL;
